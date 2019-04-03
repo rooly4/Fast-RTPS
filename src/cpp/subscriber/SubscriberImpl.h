@@ -134,6 +134,7 @@ private:
 	SubscriberHistory m_history;
 	//!Listener
 	SubscriberListener* mp_listener;
+    //!Listener to capture the events of the reader
 	class SubscriberReaderListener : public rtps::ReaderListener
 	{
 	public:

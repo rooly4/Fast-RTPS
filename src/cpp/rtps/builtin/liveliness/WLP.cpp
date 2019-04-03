@@ -44,22 +44,23 @@ namespace fastrtps{
 namespace rtps {
 
 
-WLP::WLP(BuiltinProtocols* p):	m_minAutomatic_MilliSec(std::numeric_limits<double>::max()),
-    m_minManRTPSParticipant_MilliSec(std::numeric_limits<double>::max()),
-    mp_participant(nullptr),
-    mp_builtinProtocols(p),
-    mp_builtinWriter(nullptr),
-    mp_builtinReader(nullptr),
-    mp_builtinWriterHistory(nullptr),
-    mp_builtinReaderHistory(nullptr),
-    mp_listener(nullptr),
-    mp_livelinessAutomatic(nullptr),
-    mp_livelinessManRTPSParticipant(nullptr)
+WLP::WLP(BuiltinProtocols* p)
+    : m_minAutomatic_MilliSec(std::numeric_limits<double>::max())
+    , m_minManRTPSParticipant_MilliSec(std::numeric_limits<double>::max())
+    , mp_participant(nullptr)
+    , mp_builtinProtocols(p)
+    , mp_builtinWriter(nullptr)
+    , mp_builtinReader(nullptr)
+    , mp_builtinWriterHistory(nullptr)
+    , mp_builtinReaderHistory(nullptr)
+    , mp_listener(nullptr)
+    , mp_livelinessAutomatic(nullptr)
+    , mp_livelinessManRTPSParticipant(nullptr)
 #if HAVE_SECURITY
-    ,mp_builtinWriterSecure(nullptr)
-    ,mp_builtinReaderSecure(nullptr)
-    ,mp_builtinWriterSecureHistory(nullptr)
-    ,mp_builtinReaderSecureHistory(nullptr)
+    , mp_builtinWriterSecure(nullptr)
+    , mp_builtinReaderSecure(nullptr)
+    , mp_builtinWriterSecureHistory(nullptr)
+    , mp_builtinReaderSecureHistory(nullptr)
 #endif
 {
 }
@@ -116,7 +117,13 @@ bool WLP::createEndpoints()
             mp_participant->getRTPSParticipantAttributes().throughputController.periodMillisecs != 0)
         watt.mode = ASYNCHRONOUS_WRITER;
     RTPSWriter* wout;
-    if(mp_participant->createWriter(&wout,watt,mp_builtinWriterHistory,nullptr,c_EntityId_WriterLiveliness,true))
+    if(mp_participant->createWriter(
+                &wout,
+                watt,
+                mp_builtinWriterHistory,
+                nullptr,
+                c_EntityId_WriterLiveliness,
+                true))
     {
         mp_builtinWriter = dynamic_cast<StatefulWriter*>(wout);
         logInfo(RTPS_LIVELINESS,"Builtin Liveliness Writer created");
@@ -146,7 +153,13 @@ bool WLP::createEndpoints()
     //LISTENER CREATION
     mp_listener = new WLPListener(this);
     RTPSReader* rout;
-    if(mp_participant->createReader(&rout,ratt,mp_builtinReaderHistory,(ReaderListener*)mp_listener,c_EntityId_ReaderLiveliness,true))
+    if(mp_participant->createReader(
+                &rout,
+                ratt,
+                mp_builtinReaderHistory,
+                (ReaderListener*)mp_listener,
+                c_EntityId_ReaderLiveliness,
+                true))
     {
         mp_builtinReader = dynamic_cast<StatefulReader*>(rout);
         logInfo(RTPS_LIVELINESS,"Builtin Liveliness Reader created");
@@ -456,13 +469,16 @@ void WLP::removeRemoteEndpoints(ParticipantProxyData* pdata)
 #endif
 }
 
-
-
-bool WLP::addLocalWriter(RTPSWriter* W, const WriterQos& wqos)
+bool WLP::addLocalWriter(
+        RTPSWriter* W,
+        const WriterQos& wqos)
 {
     std::lock_guard<std::recursive_mutex> guard(*mp_builtinProtocols->mp_PDP->getMutex());
-    logInfo(RTPS_LIVELINESS,W->getGuid().entityId	<<" to Liveliness Protocol")
-        double wAnnouncementPeriodMilliSec(TimeConv::Time_t2MilliSecondsDouble(wqos.m_liveliness.announcement_period));
+
+    logInfo(RTPS_LIVELINESS,W->getGuid().entityId	<<" to Liveliness Protocol");
+
+    double wAnnouncementPeriodMilliSec(TimeConv::Time_t2MilliSecondsDouble(wqos.m_liveliness.announcement_period));
+
     if(wqos.m_liveliness.kind == AUTOMATIC_LIVELINESS_QOS )
     {
         if(mp_livelinessAutomatic == nullptr)

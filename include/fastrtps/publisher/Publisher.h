@@ -35,8 +35,6 @@ struct GUID_t;
 class WriteParams;
 }
 
-
-
 class PublisherImpl;
 
 /**
