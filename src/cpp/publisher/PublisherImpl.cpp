@@ -316,3 +316,8 @@ bool PublisherImpl::wait_for_all_acked(const Time_t& max_wait)
 {
     return mp_writer->wait_for_all_acked(max_wait);
 }
+
+void PublisherImpl::get_liveliness_lost_status(LivelinessLostStatus &status)
+{
+    (void)status;
+}

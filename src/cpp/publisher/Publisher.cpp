@@ -89,3 +89,8 @@ bool Publisher::updateAttributes(const PublisherAttributes& att)
 {
     return mp_impl->updateAttributes(att);
 }
+
+void Publisher::get_liveliness_lost_status(LivelinessLostStatus &status)
+{
+    mp_impl->get_liveliness_lost_status(status);
+}

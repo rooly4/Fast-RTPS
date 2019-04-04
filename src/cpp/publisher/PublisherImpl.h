@@ -24,12 +24,10 @@
 
 #include <fastrtps/rtps/common/Locator.h>
 #include <fastrtps/rtps/common/Guid.h>
-
 #include <fastrtps/attributes/PublisherAttributes.h>
-
 #include <fastrtps/publisher/PublisherHistory.h>
-
 #include <fastrtps/rtps/writer/WriterListener.h>
+#include <fastrtps/qos/LivelinessLostStatus.h>
 
 namespace eprosima {
 namespace fastrtps{
@@ -54,7 +52,7 @@ class Publisher;
 class PublisherImpl
 {
     friend class ParticipantImpl;
-    public:
+public:
 
     /**
      * Create a publisher, assigning its pointer to the associated writer.
@@ -131,7 +129,14 @@ class PublisherImpl
 
     bool wait_for_all_acked(const rtps::Time_t& max_wait);
 
-    private:
+    /**
+     * @brief Returns the liveliness lost status
+     * @param status Liveliness lost status
+     */
+    void get_liveliness_lost_status(LivelinessLostStatus& status);
+
+private:
+
     ParticipantImpl* mp_participant;
     //! Pointer to the associated Data Writer.
 	rtps::RTPSWriter* mp_writer;

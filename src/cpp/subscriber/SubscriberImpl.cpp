@@ -212,5 +212,10 @@ uint64_t SubscriberImpl::getUnreadCount() const
     return m_history.getUnreadCount();
 }
 
+void SubscriberImpl::get_liveliness_changed_status(LivelinessChangedStatus &status)
+{
+    (void)status;
+}
+
 } /* namespace fastrtps */
 } /* namespace eprosima */
