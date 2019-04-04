@@ -145,9 +145,12 @@ bool StatefulReader::matched_writer_remove(const RemoteWriterAttributes& wdata, 
 
     lock.unlock();
 
-    if(wproxy != nullptr && deleteWP)
+    if (wproxy != nullptr)
     {
-        delete(wproxy);
+        if (deleteWP)
+        {
+            delete(wproxy);
+        }
         return true;
     }
 
