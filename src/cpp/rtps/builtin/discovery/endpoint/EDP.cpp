@@ -378,7 +378,6 @@ bool EDP::unpairReaderProxy(const GUID_t& participant_guid, const GUID_t& reader
     return true;
 }
 
-
 bool EDP::validMatching(const WriterProxyData* wdata, const ReaderProxyData* rdata)
 {
     if (wdata->topicName() != rdata->topicName())
@@ -425,6 +424,31 @@ bool EDP::validMatching(const WriterProxyData* wdata, const ReaderProxyData* rda
         logWarning(RTPS_EDP,"INCOMPATIBLE QOS (topic: "<< rdata->topicName() <<"):Remote reader "
                 << rdata->guid() << " has different Ownership Kind");
         return false;
+    }
+
+    if (wdata->m_qos.m_liveliness.lease_duration > rdata->m_qos.m_liveliness.lease_duration)
+    {
+        logWarning(RTPS_EDP, "Incompatible liveliness lease durations: offered lease duration "
+                   << wdata->m_qos.m_liveliness.lease_duration << " must be <= requested lease duration "
+                   << rdata->m_qos.m_liveliness.lease_duration);
+        return false;
+    }
+    else
+    {
+        if (wdata->m_qos.m_liveliness.kind == AUTOMATIC_LIVELINESS_QOS &&
+                rdata->m_qos.m_liveliness.kind != AUTOMATIC_LIVELINESS_QOS)
+        {
+            logWarning(RTPS_EDP, "Incompatible liveliness kinds: offered kind is AUTOMATIC but "
+                       << "requested kind is not");
+            return false;
+        }
+        else if (wdata->m_qos.m_liveliness.kind == MANUAL_BY_PARTICIPANT_LIVELINESS_QOS &&
+                 rdata->m_qos.m_liveliness.kind == MANUAL_BY_TOPIC_LIVELINESS_QOS)
+        {
+            logWarning(RTPS_EDP, "Incompatible liveliness kinds: offered kind is MANUAL_BY_PARTICIPANT and "
+                       << "requested kind is MANUAL_BY_TOPIC");
+            return false;
+        }
     }
 
 #if HAVE_SECURITY
@@ -527,6 +551,32 @@ bool EDP::validMatching(const ReaderProxyData* rdata, const WriterProxyData* wda
         logWarning(RTPS_EDP, "INCOMPATIBLE QOS (topic: " << wdata->topicName() << "):Remote Writer " << wdata->guid() << " has different Ownership Kind" << endl;);
         return false;
     }
+
+    if (wdata->m_qos.m_liveliness.lease_duration > rdata->m_qos.m_liveliness.lease_duration)
+    {
+        logWarning(RTPS_EDP, "Incompatible liveliness lease durations: offered lease duration "
+                   << wdata->m_qos.m_liveliness.lease_duration << " must be <= requested lease duration "
+                   << rdata->m_qos.m_liveliness.lease_duration);
+        return false;
+    }
+    else
+    {
+        if (wdata->m_qos.m_liveliness.kind == AUTOMATIC_LIVELINESS_QOS &&
+                rdata->m_qos.m_liveliness.kind != AUTOMATIC_LIVELINESS_QOS)
+        {
+            logWarning(RTPS_EDP, "Incompatible liveliness kinds: offered kind is AUTOMATIC but "
+                       << "requested kind is not");
+            return false;
+        }
+        else if (wdata->m_qos.m_liveliness.kind == MANUAL_BY_PARTICIPANT_LIVELINESS_QOS &&
+                 rdata->m_qos.m_liveliness.kind == MANUAL_BY_TOPIC_LIVELINESS_QOS)
+        {
+            logWarning(RTPS_EDP, "Incompatible liveliness kinds: offered kind is MANUAL_BY_PARTICIPANT and "
+                       << "requested kind is MANUAL_BY_TOPIC");
+            return false;
+        }
+    }
+
 #if HAVE_SECURITY
     // TODO: Check EndpointSecurityInfo
 #endif
