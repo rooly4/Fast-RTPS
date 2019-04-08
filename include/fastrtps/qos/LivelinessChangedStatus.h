@@ -64,9 +64,6 @@ struct LivelinessChangedStatus
     rtps::InstanceHandle_t last_publication_handle;
 };
 
-typedef LivelinessChangedStatus OfferedLivelinessChangedStatus;
-typedef LivelinessChangedStatus RequestedLivelinessChangedStatus;
-
 } //end of namespace
 } //end of namespace eprosima
 
