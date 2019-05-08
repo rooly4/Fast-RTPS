@@ -1002,7 +1002,7 @@ SequenceNumber_t StatefulWriter::next_sequence_number() const
     return mp_history->next_sequence_number();
 }
 
-bool StatefulWriter::send_periodic_heartbeat()
+bool StatefulWriter::send_periodic_heartbeat(bool final)
 {
     std::lock_guard<std::recursive_timed_mutex> guardW(mp_mutex);
 
@@ -1013,7 +1013,6 @@ bool StatefulWriter::send_periodic_heartbeat()
         {
             if (it->has_unacknowledged())
             {
-                // FinalFlag is always false because this class is used only by StatefulWriter in Reliable.
                 send_heartbeat_to_nts(*it);
                 unacked_changes = true;
             }
@@ -1063,7 +1062,8 @@ bool StatefulWriter::send_periodic_heartbeat()
     return unacked_changes;
 }
 
-void StatefulWriter::send_heartbeat_to_nts(ReaderProxy& remoteReaderProxy)
+void StatefulWriter::send_heartbeat_to_nts(
+        ReaderProxy& remoteReaderProxy)
 {
     try
     {
