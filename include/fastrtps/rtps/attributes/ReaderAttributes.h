@@ -37,7 +37,7 @@ class ReaderTimes
 public:
     ReaderTimes()
     {
-        initialAcknackDelay.nanosec = 70*1000*1000;
+        initialAcknackDelay.nanosec = 1;
         heartbeatResponseDelay.nanosec = 5*1000*1000;
     }
 
