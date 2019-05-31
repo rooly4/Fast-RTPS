@@ -16,6 +16,8 @@
 
 #include "PubSubReader.hpp"
 #include "PubSubWriter.hpp"
+#include "PublisingParticipant.hpp"
+#include "SubscribingParticipant.hpp"
 #include "ReqRepAsReliableHelloWorldRequester.hpp"
 #include "ReqRepAsReliableHelloWorldReplier.hpp"
 
@@ -30,15 +32,15 @@ BLACKBOXTEST(LivelinessQos, Liveliness_Automatic_Reliable)
 
     // Liveliness lease duration and announcement period
     uint32_t liveliness_ms = 20;
-    eprosima::fastrtps::Duration_t liveliness_s(liveliness_ms * 1e-3);
-    eprosima::fastrtps::Duration_t announcement_period(liveliness_ms * 1e-3 * 0.9);
+    Duration_t liveliness_s(liveliness_ms * 1e-3);
+    Duration_t announcement_period(liveliness_ms * 1e-3 * 0.9);
 
     reader.reliability(RELIABLE_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::AUTOMATIC_LIVELINESS_QOS)
+            .liveliness_kind(AUTOMATIC_LIVELINESS_QOS)
             .liveliness_lease_duration(liveliness_s)
             .init();
     writer.reliability(RELIABLE_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::AUTOMATIC_LIVELINESS_QOS)
+            .liveliness_kind(AUTOMATIC_LIVELINESS_QOS)
             .liveliness_announcement_period(announcement_period)
             .liveliness_lease_duration(liveliness_s)
             .init();
@@ -67,15 +69,15 @@ BLACKBOXTEST(LivelinessQos, Liveliness_Automatic_BestEffort)
 
     // Liveliness lease duration and announcement period
     uint32_t liveliness_ms = 20;
-    eprosima::fastrtps::Duration_t liveliness_s(liveliness_ms * 1e-3);
-    eprosima::fastrtps::Duration_t announcement_period(liveliness_ms * 1e-3 * 0.9);
+    Duration_t liveliness_s(liveliness_ms * 1e-3);
+    Duration_t announcement_period(liveliness_ms * 1e-3 * 0.9);
 
     reader.reliability(BEST_EFFORT_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::AUTOMATIC_LIVELINESS_QOS)
+            .liveliness_kind(AUTOMATIC_LIVELINESS_QOS)
             .liveliness_lease_duration(liveliness_s)
             .init();
     writer.reliability(BEST_EFFORT_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::AUTOMATIC_LIVELINESS_QOS)
+            .liveliness_kind(AUTOMATIC_LIVELINESS_QOS)
             .liveliness_announcement_period(announcement_period)
             .liveliness_lease_duration(liveliness_s)
             .init();
@@ -110,15 +112,15 @@ BLACKBOXTEST(LivelinessQos, ShortLiveliness_ManualByParticipant_Reliable)
     uint32_t num_samples = 3;
 
     // Liveliness lease duration and announcement period, in seconds
-    eprosima::fastrtps::Duration_t liveliness_s(writer_sleep_ms * 0.1 * 1e-3);
-    eprosima::fastrtps::Duration_t announcement_period(writer_sleep_ms * 0.1 * 1e-3 * 0.9);
+    Duration_t liveliness_s(writer_sleep_ms * 0.1 * 1e-3);
+    Duration_t announcement_period(writer_sleep_ms * 0.1 * 1e-3 * 0.9);
 
     reader.reliability(RELIABLE_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
+            .liveliness_kind(MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
             .liveliness_lease_duration(liveliness_s)
             .init();
     writer.reliability(RELIABLE_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
+            .liveliness_kind(MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
             .liveliness_announcement_period(announcement_period)
             .liveliness_lease_duration(liveliness_s)
             .init();
@@ -171,15 +173,15 @@ BLACKBOXTEST(LivelinessQos, ShortLiveliness_ManualByParticipant_BestEffort)
     uint32_t num_samples = 3;
 
     // Liveliness lease duration and announcement period, in seconds
-    eprosima::fastrtps::Duration_t liveliness_s(writer_sleep_ms * 0.1 * 1e-3);
-    eprosima::fastrtps::Duration_t announcement_period(writer_sleep_ms * 0.1 * 1e-3 * 0.9);
+    Duration_t liveliness_s(writer_sleep_ms * 0.1 * 1e-3);
+    Duration_t announcement_period(writer_sleep_ms * 0.1 * 1e-3 * 0.9);
 
     reader.reliability(BEST_EFFORT_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
+            .liveliness_kind(MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
             .liveliness_lease_duration(liveliness_s)
             .init();
     writer.reliability(BEST_EFFORT_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
+            .liveliness_kind(MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
             .liveliness_announcement_period(announcement_period)
             .liveliness_lease_duration(liveliness_s)
             .init();
@@ -232,15 +234,15 @@ BLACKBOXTEST(LivelinessQos, LongLiveliness_ManualByParticipant_Reliable)
     uint32_t num_samples = 3;
 
     // Liveliness lease duration and announcement period, in seconds
-    eprosima::fastrtps::Duration_t liveliness_s(writer_sleep_ms * 2.0 * 1e-3);
-    eprosima::fastrtps::Duration_t announcement_period(writer_sleep_ms * 2.0 * 1e-3 * 0.9);
+    Duration_t liveliness_s(writer_sleep_ms * 2.0 * 1e-3);
+    Duration_t announcement_period(writer_sleep_ms * 2.0 * 1e-3 * 0.9);
 
     reader.reliability(RELIABLE_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
+            .liveliness_kind(MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
             .liveliness_lease_duration(liveliness_s)
             .init();
     writer.reliability(RELIABLE_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
+            .liveliness_kind(MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
             .liveliness_announcement_period(announcement_period)
             .liveliness_lease_duration(liveliness_s)
             .init();
@@ -295,15 +297,15 @@ BLACKBOXTEST(LivelinessQos, LongLiveliness_ManualByParticipant_BestEffort)
     uint32_t writer_samples = 3;
 
     // Liveliness lease duration and announcement period, in seconds
-    eprosima::fastrtps::Duration_t liveliness_s(writer_sleep_ms * 2.0 * 1e-3);
-    eprosima::fastrtps::Duration_t announcement_period(writer_sleep_ms * 2.0 * 1e-3 * 0.9);
+    Duration_t liveliness_s(writer_sleep_ms * 2.0 * 1e-3);
+    Duration_t announcement_period(writer_sleep_ms * 2.0 * 1e-3 * 0.9);
 
     reader.reliability(BEST_EFFORT_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
+            .liveliness_kind(MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
             .liveliness_lease_duration(liveliness_s)
             .init();
     writer.reliability(BEST_EFFORT_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
+            .liveliness_kind(MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
             .liveliness_announcement_period(announcement_period)
             .liveliness_lease_duration(liveliness_s)
             .init();
@@ -358,15 +360,15 @@ BLACKBOXTEST(LivelinessQos, ShortLiveliness_ManualByTopic_Reliable)
     uint32_t num_samples = 3;
 
     // Liveliness lease duration and announcement period, in seconds
-    eprosima::fastrtps::Duration_t liveliness_s(writer_sleep_ms * 0.1 * 1e-3);
-    eprosima::fastrtps::Duration_t announcement_period(writer_sleep_ms * 0.1 * 1e-3 * 0.9);
+    Duration_t liveliness_s(writer_sleep_ms * 0.1 * 1e-3);
+    Duration_t announcement_period(writer_sleep_ms * 0.1 * 1e-3 * 0.9);
 
     reader.reliability(RELIABLE_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::MANUAL_BY_TOPIC_LIVELINESS_QOS)
+            .liveliness_kind(MANUAL_BY_TOPIC_LIVELINESS_QOS)
             .liveliness_lease_duration(liveliness_s)
             .init();
     writer.reliability(RELIABLE_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::MANUAL_BY_TOPIC_LIVELINESS_QOS)
+            .liveliness_kind(MANUAL_BY_TOPIC_LIVELINESS_QOS)
             .liveliness_announcement_period(announcement_period)
             .liveliness_lease_duration(liveliness_s)
             .init();
@@ -418,15 +420,15 @@ BLACKBOXTEST(LivelinessQos, ShortLiveliness_ManualByTopic_BestEffort)
     uint32_t num_samples = 3;
 
     // Liveliness lease duration and announcement period, in seconds
-    eprosima::fastrtps::Duration_t liveliness_s(writer_sleep_ms * 0.1 * 1e-3);
-    eprosima::fastrtps::Duration_t announcement_period(writer_sleep_ms * 0.1 * 1e-3 * 0.9);
+    Duration_t liveliness_s(writer_sleep_ms * 0.1 * 1e-3);
+    Duration_t announcement_period(writer_sleep_ms * 0.1 * 1e-3 * 0.9);
 
     reader.reliability(BEST_EFFORT_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::MANUAL_BY_TOPIC_LIVELINESS_QOS)
+            .liveliness_kind(MANUAL_BY_TOPIC_LIVELINESS_QOS)
             .liveliness_lease_duration(liveliness_s)
             .init();
     writer.reliability(BEST_EFFORT_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::MANUAL_BY_TOPIC_LIVELINESS_QOS)
+            .liveliness_kind(MANUAL_BY_TOPIC_LIVELINESS_QOS)
             .liveliness_announcement_period(announcement_period)
             .liveliness_lease_duration(liveliness_s)
             .init();
@@ -480,15 +482,15 @@ BLACKBOXTEST(LivelinessQos, LongLiveliness_ManualByTopic_Reliable)
     uint32_t num_samples = 3;
 
     // Liveliness lease duration and announcement period, in seconds
-    eprosima::fastrtps::Duration_t liveliness_s(writer_sleep_ms * 2 * 1e-3);
-    eprosima::fastrtps::Duration_t announcement_period(writer_sleep_ms * 2 * 1e-3 * 0.9);
+    Duration_t liveliness_s(writer_sleep_ms * 2 * 1e-3);
+    Duration_t announcement_period(writer_sleep_ms * 2 * 1e-3 * 0.9);
 
     reader.reliability(RELIABLE_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::MANUAL_BY_TOPIC_LIVELINESS_QOS)
+            .liveliness_kind(MANUAL_BY_TOPIC_LIVELINESS_QOS)
             .liveliness_lease_duration(liveliness_s)
             .init();
     writer.reliability(RELIABLE_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::MANUAL_BY_TOPIC_LIVELINESS_QOS)
+            .liveliness_kind(MANUAL_BY_TOPIC_LIVELINESS_QOS)
             .liveliness_announcement_period(announcement_period)
             .liveliness_lease_duration(liveliness_s)
             .init();
@@ -544,15 +546,15 @@ BLACKBOXTEST(LivelinessQos, LongLiveliness_ManualByTopic_BestEffort)
     uint32_t num_samples = 3;
 
     // Liveliness lease duration and announcement period, in seconds
-    eprosima::fastrtps::Duration_t liveliness_s(writer_sleep_ms * 2 * 1e-3);
-    eprosima::fastrtps::Duration_t announcement_period(writer_sleep_ms * 2 * 1e-3 * 0.9);
+    Duration_t liveliness_s(writer_sleep_ms * 2 * 1e-3);
+    Duration_t announcement_period(writer_sleep_ms * 2 * 1e-3 * 0.9);
 
     reader.reliability(BEST_EFFORT_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::MANUAL_BY_TOPIC_LIVELINESS_QOS)
+            .liveliness_kind(MANUAL_BY_TOPIC_LIVELINESS_QOS)
             .liveliness_lease_duration(liveliness_s)
             .init();
     writer.reliability(BEST_EFFORT_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::MANUAL_BY_TOPIC_LIVELINESS_QOS)
+            .liveliness_kind(MANUAL_BY_TOPIC_LIVELINESS_QOS)
             .liveliness_announcement_period(announcement_period)
             .liveliness_lease_duration(liveliness_s)
             .init();
@@ -610,15 +612,15 @@ BLACKBOXTEST(LivelinessQos, LongLiveliness_ManualByParticipant_Automatic_Reliabl
     uint32_t num_samples = 3;
 
     // Liveliness lease duration and announcement period, in seconds
-    eprosima::fastrtps::Duration_t liveliness_s(writer_sleep_ms * 2 * 1e-3);
-    eprosima::fastrtps::Duration_t announcement_period(writer_sleep_ms * 2 * 1e-3 * 0.9);
+    Duration_t liveliness_s(writer_sleep_ms * 2 * 1e-3);
+    Duration_t announcement_period(writer_sleep_ms * 2 * 1e-3 * 0.9);
 
     reader.reliability(RELIABLE_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::AUTOMATIC_LIVELINESS_QOS)
+            .liveliness_kind(AUTOMATIC_LIVELINESS_QOS)
             .liveliness_lease_duration(liveliness_s)
             .init();
     writer.reliability(RELIABLE_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
+            .liveliness_kind(MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
             .liveliness_announcement_period(announcement_period)
             .liveliness_lease_duration(liveliness_s)
             .init();
@@ -672,15 +674,15 @@ BLACKBOXTEST(LivelinessQos, ShortLiveliness_ManualByParticipant_Automatic_Reliab
     uint32_t num_samples = 3;
 
     // Liveliness lease duration and announcement period, in seconds
-    eprosima::fastrtps::Duration_t liveliness_s(writer_sleep_ms * 0.1 * 1e-3);
-    eprosima::fastrtps::Duration_t announcement_period(writer_sleep_ms * 0.1 * 1e-3 * 0.9);
+    Duration_t liveliness_s(writer_sleep_ms * 0.1 * 1e-3);
+    Duration_t announcement_period(writer_sleep_ms * 0.1 * 1e-3 * 0.9);
 
     reader.reliability(RELIABLE_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::AUTOMATIC_LIVELINESS_QOS)
+            .liveliness_kind(AUTOMATIC_LIVELINESS_QOS)
             .liveliness_lease_duration(liveliness_s)
             .init();
     writer.reliability(RELIABLE_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
+            .liveliness_kind(MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
             .liveliness_announcement_period(announcement_period)
             .liveliness_lease_duration(liveliness_s)
             .init();
@@ -731,15 +733,15 @@ BLACKBOXTEST(LivelinessQos, LongLiveliness_ManualByParticipant_Automatic_BestEff
     uint32_t num_samples = 3;
 
     // Liveliness lease duration and announcement period, in seconds
-    eprosima::fastrtps::Duration_t liveliness_s(writer_sleep_ms * 2 * 1e-3);
-    eprosima::fastrtps::Duration_t announcement_period(writer_sleep_ms * 2 * 1e-3 * 0.9);
+    Duration_t liveliness_s(writer_sleep_ms * 2 * 1e-3);
+    Duration_t announcement_period(writer_sleep_ms * 2 * 1e-3 * 0.9);
 
     reader.reliability(BEST_EFFORT_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::AUTOMATIC_LIVELINESS_QOS)
+            .liveliness_kind(AUTOMATIC_LIVELINESS_QOS)
             .liveliness_lease_duration(liveliness_s)
             .init();
     writer.reliability(BEST_EFFORT_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
+            .liveliness_kind(MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
             .liveliness_announcement_period(announcement_period)
             .liveliness_lease_duration(liveliness_s)
             .init();
@@ -792,15 +794,15 @@ BLACKBOXTEST(LivelinessQos, ShortLiveliness_ManualByParticipant_Automatic_BestEf
     uint32_t num_samples = 3;
 
     // Liveliness lease duration and announcement period, in seconds
-    eprosima::fastrtps::Duration_t liveliness_s(writer_sleep_ms * 0.1 * 1e-3);
-    eprosima::fastrtps::Duration_t announcement_period(writer_sleep_ms * 0.1 * 1e-3 * 0.9);
+    Duration_t liveliness_s(writer_sleep_ms * 0.1 * 1e-3);
+    Duration_t announcement_period(writer_sleep_ms * 0.1 * 1e-3 * 0.9);
 
     reader.reliability(BEST_EFFORT_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::AUTOMATIC_LIVELINESS_QOS)
+            .liveliness_kind(AUTOMATIC_LIVELINESS_QOS)
             .liveliness_lease_duration(liveliness_s)
             .init();
     writer.reliability(BEST_EFFORT_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
+            .liveliness_kind(MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
             .liveliness_announcement_period(announcement_period)
             .liveliness_lease_duration(liveliness_s)
             .init();
@@ -851,15 +853,15 @@ BLACKBOXTEST(LivelinessQos, ManualByTopic_Automatic_Reliable)
     uint32_t num_samples = 3;
 
     // Liveliness lease duration and announcement period, in seconds
-    eprosima::fastrtps::Duration_t liveliness_s(writer_sleep_ms * 0.1 * 1e-3);
-    eprosima::fastrtps::Duration_t announcement_period(writer_sleep_ms * 0.1 * 1e-3 * 0.9);
+    Duration_t liveliness_s(writer_sleep_ms * 0.1 * 1e-3);
+    Duration_t announcement_period(writer_sleep_ms * 0.1 * 1e-3 * 0.9);
 
     reader.reliability(RELIABLE_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::AUTOMATIC_LIVELINESS_QOS)
+            .liveliness_kind(AUTOMATIC_LIVELINESS_QOS)
             .liveliness_lease_duration(liveliness_s)
             .init();
     writer.reliability(RELIABLE_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::MANUAL_BY_TOPIC_LIVELINESS_QOS)
+            .liveliness_kind(MANUAL_BY_TOPIC_LIVELINESS_QOS)
             .liveliness_announcement_period(announcement_period)
             .liveliness_lease_duration(liveliness_s)
             .init();
@@ -910,15 +912,15 @@ BLACKBOXTEST(LivelinessQos, ManualByTopic_Automatic_BestEffort)
     uint32_t num_samples = 3;
 
     // Liveliness lease duration and announcement period, in seconds
-    eprosima::fastrtps::Duration_t liveliness_s(writer_sleep_ms * 0.1 * 1e-3);
-    eprosima::fastrtps::Duration_t announcement_period(writer_sleep_ms * 0.1 * 1e-3 * 0.9);
+    Duration_t liveliness_s(writer_sleep_ms * 0.1 * 1e-3);
+    Duration_t announcement_period(writer_sleep_ms * 0.1 * 1e-3 * 0.9);
 
     reader.reliability(BEST_EFFORT_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::AUTOMATIC_LIVELINESS_QOS)
+            .liveliness_kind(AUTOMATIC_LIVELINESS_QOS)
             .liveliness_lease_duration(liveliness_s)
             .init();
     writer.reliability(BEST_EFFORT_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::MANUAL_BY_TOPIC_LIVELINESS_QOS)
+            .liveliness_kind(MANUAL_BY_TOPIC_LIVELINESS_QOS)
             .liveliness_announcement_period(announcement_period)
             .liveliness_lease_duration(liveliness_s)
             .init();
@@ -970,15 +972,15 @@ BLACKBOXTEST(LivelinessQos, ManualByTopic_ManualByParticipant_Reliable)
     uint32_t num_samples = 3;
 
     // Liveliness lease duration and announcement period, in seconds
-    eprosima::fastrtps::Duration_t liveliness_s(writer_sleep_ms * 0.1 * 1e-3);
-    eprosima::fastrtps::Duration_t announcement_period(writer_sleep_ms * 0.1 * 1e-3 * 0.9);
+    Duration_t liveliness_s(writer_sleep_ms * 0.1 * 1e-3);
+    Duration_t announcement_period(writer_sleep_ms * 0.1 * 1e-3 * 0.9);
 
     reader.reliability(RELIABLE_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
+            .liveliness_kind(MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
             .liveliness_lease_duration(liveliness_s)
             .init();
     writer.reliability(RELIABLE_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::MANUAL_BY_TOPIC_LIVELINESS_QOS)
+            .liveliness_kind(MANUAL_BY_TOPIC_LIVELINESS_QOS)
             .liveliness_announcement_period(announcement_period)
             .liveliness_lease_duration(liveliness_s)
             .init();
@@ -1029,15 +1031,15 @@ BLACKBOXTEST(LivelinessQos, ManualByTopic_ManualByParticipant_BestEffort)
     uint32_t num_samples = 3;
 
     // Liveliness lease duration and announcement period, in seconds
-    eprosima::fastrtps::Duration_t liveliness_s(writer_sleep_ms * 0.1 * 1e-3);
-    eprosima::fastrtps::Duration_t announcement_period(writer_sleep_ms * 0.1 * 1e-3 * 0.9);
+    Duration_t liveliness_s(writer_sleep_ms * 0.1 * 1e-3);
+    Duration_t announcement_period(writer_sleep_ms * 0.1 * 1e-3 * 0.9);
 
     reader.reliability(BEST_EFFORT_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
+            .liveliness_kind(MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
             .liveliness_lease_duration(liveliness_s)
             .init();
     writer.reliability(BEST_EFFORT_RELIABILITY_QOS)
-            .liveliness_kind(eprosima::fastrtps::LivelinessQosPolicyKind::MANUAL_BY_TOPIC_LIVELINESS_QOS)
+            .liveliness_kind(MANUAL_BY_TOPIC_LIVELINESS_QOS)
             .liveliness_announcement_period(announcement_period)
             .liveliness_lease_duration(liveliness_s)
             .init();
@@ -1076,4 +1078,199 @@ BLACKBOXTEST(LivelinessQos, ManualByTopic_ManualByParticipant_BestEffort)
     EXPECT_EQ(reader.times_liveliness_recovered(), num_samples);
 }
 
+//! Tests liveliness in the following scenario
+//! A participant with two publishers and two topics
+//! A participant with two subscribers and two topics
+//! Manual by participant liveliness
+//! Only one publisher asserts liveliness manually
+BLACKBOXTEST(LivelinessQos, TwoWriters_TwoReaders_ManualByParticipant)
+{
+    unsigned int num_pub = 2;
+    unsigned int num_sub = 2;
+    unsigned int lease_duration_s = 1;
+    unsigned int announcement_period_s = 0.5;
+
+    // Publishers
+    PublishingParticipant<HelloWorldType> publishers(num_pub, num_sub);
+    ASSERT_TRUE(publishers.init_participant());
+    publishers.topic_name(TEST_TOPIC_NAME + "1")
+            .liveliness_announcement_period(announcement_period_s)
+            .liveliness_lease_duration(lease_duration_s)
+            .liveliness_kind(MANUAL_BY_PARTICIPANT_LIVELINESS_QOS);
+    ASSERT_TRUE(publishers.init_publisher(0));
+    publishers.topic_name(TEST_TOPIC_NAME + "2")
+            .liveliness_announcement_period(announcement_period_s)
+            .liveliness_lease_duration(lease_duration_s)
+            .liveliness_kind(MANUAL_BY_PARTICIPANT_LIVELINESS_QOS);
+    ASSERT_TRUE(publishers.init_publisher(1));
+
+    // Subscribers
+    SubscribingParticipant<HelloWorldType> subscribers(num_sub, num_pub);
+    ASSERT_TRUE(subscribers.init_participant());
+    subscribers.topic_name(TEST_TOPIC_NAME + "1")
+            .liveliness_lease_duration(lease_duration_s)
+            .liveliness_kind(MANUAL_BY_PARTICIPANT_LIVELINESS_QOS);
+    ASSERT_TRUE(subscribers.init_subscriber(0));
+    subscribers.topic_name(TEST_TOPIC_NAME + "2")
+            .liveliness_lease_duration(lease_duration_s)
+            .liveliness_kind(MANUAL_BY_PARTICIPANT_LIVELINESS_QOS);
+    ASSERT_TRUE(subscribers.init_subscriber(1));
+
+    publishers.wait_discovery();
+    subscribers.wait_discovery();
+
+    unsigned int num_assertions = 4;
+    unsigned int assert_rate_ms = 50;
+    for (unsigned int count = 0; count < num_assertions; count++)
+    {
+        publishers.assert_liveliness(0);
+        std::this_thread::sleep_for(std::chrono::milliseconds(assert_rate_ms));
+    }
+    // Only one publisher asserts liveliness but the other should be asserted by the QoS, as
+    // liveliness kind is manual by participant
+    EXPECT_EQ(publishers.times_liveliness_lost(), 0u);
+    EXPECT_EQ(subscribers.times_liveliness_recovered(), num_pub);
+    EXPECT_EQ(subscribers.times_liveliness_lost(), 0u);
+
+    std::this_thread::sleep_for(std::chrono::seconds(2));
+    EXPECT_EQ(publishers.times_liveliness_lost(), num_pub);
+    EXPECT_EQ(subscribers.times_liveliness_recovered(), num_pub);
+    EXPECT_EQ(subscribers.times_liveliness_lost(), num_pub);
+}
+
+//! Tests liveliness in the same scenario as above but using manual by topic liveliness
+//! A participant with two publishers and two topics
+//! A participant with two subscribers and two topics
+//! Manual by topic liveliness
+//! Only one publisher asserts liveliness manually
+BLACKBOXTEST(LivelinessQos, TwoWriters_TwoReaders_ManualByTopic)
+{
+    unsigned int num_pub = 2;
+    unsigned int num_sub = 2;
+    unsigned int lease_duration_ms = 500;
+    unsigned int announcement_period_ms = 250;
+
+    // Publishers
+    PublishingParticipant<HelloWorldType> publishers(num_pub, num_sub);
+    ASSERT_TRUE(publishers.init_participant());
+    publishers.topic_name(TEST_TOPIC_NAME + "1")
+            .reliability(RELIABLE_RELIABILITY_QOS)
+            .liveliness_announcement_period(announcement_period_ms * 1e-3)
+            .liveliness_lease_duration(lease_duration_ms * 1e-3)
+            .liveliness_kind(MANUAL_BY_TOPIC_LIVELINESS_QOS);
+    ASSERT_TRUE(publishers.init_publisher(0));
+    publishers.topic_name(TEST_TOPIC_NAME + "2")
+            .reliability(RELIABLE_RELIABILITY_QOS)
+            .liveliness_announcement_period(announcement_period_ms * 1e-3)
+            .liveliness_lease_duration(lease_duration_ms * 1e-3)
+            .liveliness_kind(MANUAL_BY_TOPIC_LIVELINESS_QOS);
+    ASSERT_TRUE(publishers.init_publisher(1));
+
+    // Subscribers
+    SubscribingParticipant<HelloWorldType> subscribers(num_sub, num_pub);
+    ASSERT_TRUE(subscribers.init_participant());
+    subscribers.topic_name(TEST_TOPIC_NAME + "1")
+            .reliability(RELIABLE_RELIABILITY_QOS)
+            .liveliness_lease_duration(lease_duration_ms * 1e-3)
+            .liveliness_kind(MANUAL_BY_TOPIC_LIVELINESS_QOS);
+    ASSERT_TRUE(subscribers.init_subscriber(0));
+    subscribers.topic_name(TEST_TOPIC_NAME + "2")
+            .reliability(RELIABLE_RELIABILITY_QOS)
+            .liveliness_lease_duration(lease_duration_ms * 1e-3)
+            .liveliness_kind(MANUAL_BY_TOPIC_LIVELINESS_QOS);
+    ASSERT_TRUE(subscribers.init_subscriber(1));
+
+    publishers.wait_discovery();
+    subscribers.wait_discovery();
+
+    unsigned int num_assertions = 4;
+    unsigned int assert_rate_ms = 10;
+    for (unsigned int count = 0; count < num_assertions; count++)
+    {
+        publishers.assert_liveliness(0);
+        std::this_thread::sleep_for(std::chrono::milliseconds(assert_rate_ms));
+    }
+    EXPECT_EQ(publishers.times_liveliness_lost(), 0u);
+    EXPECT_EQ(subscribers.times_liveliness_recovered(), 1u);
+    EXPECT_EQ(subscribers.times_liveliness_lost(), 0u);
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(lease_duration_ms * 2));
+    EXPECT_EQ(publishers.times_liveliness_lost(), 1u);
+    EXPECT_EQ(subscribers.times_liveliness_recovered(), 1u);
+    EXPECT_EQ(subscribers.times_liveliness_lost(), 1u);
+}
+
+BLACKBOXTEST(LivelinessQos, ThreeWriters_ThreeReaders)
+{
+    unsigned int num_pub = 3;
+    unsigned int num_sub = 3;
+    unsigned int lease_duration_ms = 500;
+    unsigned int announcement_period_ms = 250;
+
+    // Publishers
+    PublishingParticipant<HelloWorldType> publishers(num_pub, num_sub);
+    ASSERT_TRUE(publishers.init_participant());
+    publishers.topic_name(TEST_TOPIC_NAME)
+            .reliability(RELIABLE_RELIABILITY_QOS)
+            .liveliness_announcement_period(announcement_period_ms * 1e-3)
+            .liveliness_lease_duration(lease_duration_ms * 1e-3)
+            .liveliness_kind(AUTOMATIC_LIVELINESS_QOS);
+    ASSERT_TRUE(publishers.init_publisher(0));
+    publishers.topic_name(TEST_TOPIC_NAME)
+            .reliability(RELIABLE_RELIABILITY_QOS)
+            .liveliness_announcement_period(announcement_period_ms * 1e-3)
+            .liveliness_lease_duration(lease_duration_ms * 1e-3)
+            .liveliness_kind(MANUAL_BY_PARTICIPANT_LIVELINESS_QOS);
+    ASSERT_TRUE(publishers.init_publisher(1));
+    publishers.topic_name(TEST_TOPIC_NAME)
+            .reliability(RELIABLE_RELIABILITY_QOS)
+            .liveliness_announcement_period(announcement_period_ms * 1e-3)
+            .liveliness_lease_duration(lease_duration_ms * 1e-3)
+            .liveliness_kind(MANUAL_BY_TOPIC_LIVELINESS_QOS);
+    ASSERT_TRUE(publishers.init_publisher(2));
+
+    // Subscribers
+    SubscribingParticipant<HelloWorldType> subscribers(num_sub, num_pub);
+    ASSERT_TRUE(subscribers.init_participant());
+    subscribers.topic_name(TEST_TOPIC_NAME)
+            .reliability(RELIABLE_RELIABILITY_QOS)
+            .liveliness_lease_duration(lease_duration_ms * 1e-3)
+            .liveliness_kind(AUTOMATIC_LIVELINESS_QOS);
+    ASSERT_TRUE(subscribers.init_subscriber(0));
+    subscribers.topic_name(TEST_TOPIC_NAME)
+            .reliability(RELIABLE_RELIABILITY_QOS)
+            .liveliness_lease_duration(lease_duration_ms * 1e-3)
+            .liveliness_kind(MANUAL_BY_TOPIC_LIVELINESS_QOS);
+    ASSERT_TRUE(subscribers.init_subscriber(1));
+    subscribers.topic_name(TEST_TOPIC_NAME)
+            .reliability(RELIABLE_RELIABILITY_QOS)
+            .liveliness_lease_duration(lease_duration_ms * 1e-3)
+            .liveliness_kind(MANUAL_BY_TOPIC_LIVELINESS_QOS);
+    ASSERT_TRUE(subscribers.init_subscriber(2));
+
+    publishers.wait_discovery();
+    subscribers.wait_discovery();
+
+    // Manual by topic publisher asserts liveliness
+    unsigned int num_assertions = 4;
+    unsigned int assert_rate_ms = 10;
+    for (unsigned int count = 0; count < num_assertions; count++)
+    {
+        publishers.assert_liveliness(2);
+        std::this_thread::sleep_for(std::chrono::milliseconds(assert_rate_ms));
+    }
+    // All three subscribers are notified that liveliness was recovered
+    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    EXPECT_EQ(subscribers.times_liveliness_recovered(), 3u);
+//    EXPECT_EQ(publishers.times_liveliness_lost(), 0u);
+//    EXPECT_EQ(subscribers.times_liveliness_recovered(), 1u);
+//    EXPECT_EQ(subscribers.times_liveliness_lost(), 0u);
+
+//    std::this_thread::sleep_for(std::chrono::milliseconds(lease_duration_ms * 2));
+//    EXPECT_EQ(publishers.times_liveliness_lost(), 1u);
+//    EXPECT_EQ(subscribers.times_liveliness_recovered(), 1u);
+//    EXPECT_EQ(subscribers.times_liveliness_lost(), 1u);
+}
+
 // TODO raquel Add tests with participants having more than one publisher/subscriber
+// TODO raquel Test the case of two readers matched to a writer and one reader being removed

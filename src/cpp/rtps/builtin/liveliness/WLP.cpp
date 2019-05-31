@@ -751,22 +751,20 @@ WriterHistory* WLP::getBuiltinWriterHistory()
 
 bool WLP::assert_liveliness(LivelinessQosPolicyKind kind)
 {
+    // TODO raquel check we only want to assert liveliness on subscribing side and document in header file
     return sub_liveliness_manager_->assert_liveliness(kind);
 }
 
 bool WLP::assert_liveliness(GuidPrefix_t prefix)
 {
+    // TODO raquel check we only want to assert liveliness on subscribing side and document in header file
     return sub_liveliness_manager_->assert_liveliness(prefix);
 }
 
 bool WLP::assert_liveliness(GUID_t writer)
 {
-    // TODO raquel split this method into two
-
-    bool pub = pub_liveliness_manager_->assert_liveliness(writer);
-    bool sub = sub_liveliness_manager_->assert_liveliness(writer);
-
-    return (pub && sub);
+    // TODO raquel check we only want to assert liveliness on publishing side and document in header file
+    return pub_liveliness_manager_->assert_liveliness(writer);
 }
 
 void WLP::pub_liveliness_lost(GUID_t writer)
